@@ -73,3 +73,6 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+/Plugins/ThirdPartyLibs/
+/Plugins/
+/Plugins/ThirdPartyLibs/Source/ThirdParty/BoostLibrary/include/boost-1_79/

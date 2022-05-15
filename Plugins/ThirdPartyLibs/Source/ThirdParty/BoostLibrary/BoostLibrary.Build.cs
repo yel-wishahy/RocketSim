@@ -54,7 +54,7 @@ public class BoostLibrary : ModuleRules
 		
 	}
 
-	public void LoadBoost()
+	public void LoadBoost_1_64()
 	{
 		PublicAdditionalLibraries.Add(Path.Combine(ModulePath, "lib/libboost_chrono-vc141-mt-1_64.lib"));
 		PublicAdditionalLibraries.Add(Path.Combine(ModulePath, "lib/libboost_date_time-vc141-mt-1_64.lib"));
@@ -77,13 +77,30 @@ public class BoostLibrary : ModuleRules
 		PublicDefinitions.Add(string.Format("WITH_BOOST_BINDING={0}", 1));
 	}
 	
+		public void LoadBoost_1_79()
+    	{
+    		PublicIncludePaths.Add(Path.Combine(ModulePath, "include/boost-1_79"));
+    		
+    		// Not sure if needed
+    		PublicDefinitions.Add("_CRT_SECURE_NO_WARNINGS=1");
+    		PublicDefinitions.Add("BOOST_DISABLE_ABI_HEADERS=1");
+    		
+    		
+    		// Needed configurations in order to run Boost
+    		bUseRTTI = true;
+    		bEnableExceptions = true;
+    		
+    		PublicDefinitions.Add(string.Format("WITH_PCL_BINDING={0}", 1));
+    		PublicDefinitions.Add(string.Format("WITH_BOOST_BINDING={0}", 1));
+    	}
+	
 	public BoostLibrary(ReadOnlyTargetRules Target) : base(Target)
 	{
 		Type = ModuleType.External;
 
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
-			LoadBoost();
+			LoadBoost_1_64();
 		}
 	}
 
