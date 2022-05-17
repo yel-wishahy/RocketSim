@@ -1,19 +1,5 @@
-Content/*
-Binaries/*
-.idea/*
-.vs/*
-Intermediate/*
-Saved/*
-packages/boost.1.79.0/.signature.p7s
-packages/boost.1.79.0/boost.1.79.0.nupkg
-packages/boost.1.79.0/build/boost.targets
-/Plugins/*
-
-
-
 # Visual Studio 2015 user specific files
 .vs/
-<<<<<<< HEAD
 .idea/
 
 # Compiled Object files
@@ -87,11 +73,6 @@ Plugins/*/Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
-Intermediate/
-Saved/
-packages/boost.1.79.0/.signature.p7s
-packages/boost.1.79.0/boost.1.79.0.nupkg
-packages/boost.1.79.0/build/boost.targets
 /Plugins/ThirdPartyLibs/
 /Plugins/
 /Plugins/ThirdPartyLibs/Source/ThirdParty/BoostLibrary/include/boost-1_79/
