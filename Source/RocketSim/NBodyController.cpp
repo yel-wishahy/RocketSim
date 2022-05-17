@@ -3,12 +3,6 @@
 
 #include "NBodyController.h"
 
-#include <string>
-
-#include "CelestialBodyActor.h"
-#include "PhysicsBody.h"
-#include "Kismet/GameplayStatics.h"
-
 ANBodyController* ANBodyController::GetInstance()
 {
 	if(Instance == nullptr)
@@ -42,6 +36,8 @@ void ANBodyController::BeginPlay()
 	}
 
 	NumBodies = Bodies.Num();
+
+	InitialState = NBodySolver::PackState(NumBodies*Dim*2,NumBodies,Dim,Bodies);
 	
 	Super::BeginPlay();
 	
@@ -65,9 +61,11 @@ void ANBodyController::Tick(float DeltaTime)
 
 	if(SimMode== SimulationMode::Integrate)
 	{
-		auto t0 = UGameplayStatics::GetTimeSeconds(GetWorld());
-		auto tf = t0 + DeltaTime;
-		UpdatePositionIntegrate(t0,tf,PhysicsTimeStep);
+		auto tf = UGameplayStatics::GetTimeSeconds(GetWorld());
+		auto t0 = tf - 5*PhysicsTimeStep;
+		
+		if(tf - t0 > PhysicsTimeStep && t0 >= 0)
+			UpdatePositionIntegrate(LastPhysicsTime,tf,PhysicsTimeStep);
 
 		UE_LOG(LogTemp, Warning, TEXT("Completed Physics Integration from %f to %f"), t0,tf);
 	}
@@ -110,7 +108,7 @@ void ANBodyController::UpdatePositionIterate(float DeltaTime)
 
 void ANBodyController::UpdatePositionIntegrate(float t0, float tf, float DeltaTime)
 {
-	NBodySolver::return_type NextState = NBodySolver::IntegrateOde(t0,tf,DeltaTime);
+	NBodySolver::return_type NextState =  NBodySolver::IntegrateOde(InitialState,t0,tf,DeltaTime,2*NumBodies*Dim,NumBodies,Dim,Gravity,Bodies);
 
 	for(int i = 0; i < NumBodies; i++)
 	{

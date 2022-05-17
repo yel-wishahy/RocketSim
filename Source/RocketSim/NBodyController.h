@@ -6,6 +6,8 @@
 #include "PhysicsBody.h"
 #include "GameFramework/Actor.h"
 #include "NBodySolver.h"
+#include "CelestialBodyActor.h"
+#include "Kismet/GameplayStatics.h"
 #include "NBodyController.generated.h"
 
 
@@ -35,13 +37,14 @@ public:
 	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category=Any)
 	/*Gravitation constant used in physics simulation (sim units are cm,s,kg*/
-	float Gravity = 1.f;
+	double Gravity = 1.f;
 
 	int NumBodies = 0;
 	int Dim = 3;
 
 private:
-	float LastPhysicsTime = 0;
+	NBodySolver::state_type InitialState;
+	double LastPhysicsTime = 0;
 	inline static ANBodyController* Instance;
 	ANBodyController();
 protected:
